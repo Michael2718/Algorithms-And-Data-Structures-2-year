@@ -3,4 +3,5 @@ project(Algorithms_And_Data_Structures_2_year)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Algorithms_And_Data_Structures_2_year main.cpp)
+add_executable(test test.cpp)
+add_executable(Lab_1 "Lab_1/main.cpp")
