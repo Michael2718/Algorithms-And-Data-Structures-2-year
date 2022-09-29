@@ -11,17 +11,6 @@ using std::cout, std::cin, std::sin, std::setprecision, std::chrono::duration_ca
 
 using hr_clock = std::chrono::high_resolution_clock;
 
-/*void BubbleSort2(vector<int> &array) {
-    int n = array.size();
-    for (int i = 0; i < n-1; i++) {
-        for (int j = n-1; j >= i+1; j--) {
-            if (array[j-1] > array[j]) {
-                std::swap(array[j-1], array[j]);
-            }
-        }
-    }
-}*/
-
 vector<int> GenerateRandomArray(int n) {
     random_device rd;
     mt19937 mt(rd());
@@ -94,21 +83,76 @@ void CountingSort(vector<int> &array, int k) {
     array = result;
 }
 
+vector<double> TestSortingAlgorithms(vector<int> arr) {
+    vector<int> arr_bubble_sort(arr);
+    vector<int> arr_merge_sort(arr);
+    vector<int> arr_count_sort(arr);
+    vector<int> arr_std_sort(arr);
+    vector<double> results;
+
+    // Bubble Sort
+    hr_clock::time_point t1 = hr_clock::now();
+    BubbleSort(arr_bubble_sort);
+    hr_clock::time_point t2 = hr_clock::now();
+    auto duration = duration_cast<milliseconds>(t2 - t1).count();
+    results.push_back((double)duration/1000);
+
+    // Merge Sort
+    t1 = hr_clock::now();
+    MergeSort(arr_merge_sort, 0, arr_merge_sort.size()-1); // NOLINT(cppcoreguidelines-narrowing-conversions)
+    t2 = hr_clock::now();
+    duration = duration_cast<milliseconds>(t2 - t1).count();
+    results.push_back((double)duration/1000);
+
+    // Counting Sort
+    t1 = hr_clock::now();
+    CountingSort(arr_count_sort, arr_count_sort.size()); // NOLINT(cppcoreguidelines-narrowing-conversions)
+    t2 = hr_clock::now();
+    duration = duration_cast<milliseconds>(t2 - t1).count();
+    results.push_back((double)duration/1000);
+
+    // std::sort
+    t1 = hr_clock::now();
+    sort(arr_std_sort.begin(), arr_std_sort.end());
+    t2 = hr_clock::now();
+
+    duration = duration_cast<milliseconds>(t2 - t1).count();
+    results.push_back((double)duration/1000);
+
+    return results;
+}
 
 int main() {
-    cout << "Enter size of array(n): ";
-    int n;
-    cin >> n;
+    vector<int> random_arr;
+    vector<vector<double>> test_results;
 
-    vector<int> random_arr = GenerateRandomArray(n);
-    vector<int> arr_bubble_sort(random_arr);
-    vector<int> arr_merge_sort(random_arr);
-    vector<int> arr_count_sort(random_arr);
-    vector<int> arr_std_sort(random_arr);
+    cout << "Testing Sorting Algorithms...\n";
+    for (int n = 10; n < 51; n+=5) {
+        random_arr = GenerateRandomArray(n*1000);
+        test_results.push_back(TestSortingAlgorithms(random_arr));
+    }
 
-    //std::sort(arr_standard_sort.begin(), arr_standard_sort.end());
-    //for (auto num: arr_bubble_sort2) { cout << num << " "; }
+    cout << "Bubble Sort:\n";
+    for (auto & test_result : test_results) {
+        cout << test_result[0] << "\n";
+    }
 
+    cout << "Merge Sort:\n";
+    for (auto & test_result : test_results) {
+        cout << test_result[1] << "\n";
+    }
+
+    cout << "Counting Sort:\n";
+    for (auto & test_result : test_results) {
+        cout << test_result[2] << "\n";
+    }
+
+    cout << "Standard C++ Sort(std::sort):\n";
+    for (auto & test_result : test_results) {
+        cout << test_result[3] << "\n";
+    }
+
+/*
     // Bubble Sort
     hr_clock::time_point t1 = hr_clock::now();
     BubbleSort(arr_bubble_sort);
@@ -140,6 +184,6 @@ int main() {
 
     duration = duration_cast<milliseconds>(t2 - t1).count();
     cout << "Standard C++ Sort(std::sort) : Array of size " << n << " sorted in " << setprecision(2) << (double)duration/1000  << " seconds.\n";
-
+*/
     return 0;
 }
