@@ -83,7 +83,7 @@ void CountingSort(vector<int> &array, int k) {
     array = result;
 }
 
-vector<double> TestSortingAlgorithms(vector<int> arr) {
+vector<double> TestSortingAlgorithms(const vector<int>& arr) {
     vector<int> arr_bubble_sort(arr);
     vector<int> arr_merge_sort(arr);
     vector<int> arr_count_sort(arr);
@@ -152,38 +152,5 @@ int main() {
         cout << test_result[3] << "\n";
     }
 
-/*
-    // Bubble Sort
-    hr_clock::time_point t1 = hr_clock::now();
-    BubbleSort(arr_bubble_sort);
-    hr_clock::time_point t2 = hr_clock::now();
-
-    auto duration = duration_cast<milliseconds>(t2 - t1).count();
-    cout << "Bubble sort: Array of size " << n << " sorted in " << setprecision(2) << (double)duration/1000  << " seconds.\n";
-
-    // Merge Sort
-    t1 = hr_clock::now();
-    MergeSort(arr_merge_sort, 0, arr_merge_sort.size()-1); // NOLINT(cppcoreguidelines-narrowing-conversions)
-    t2 = hr_clock::now();
-
-    duration = duration_cast<milliseconds>(t2 - t1).count();
-    cout << "Merge sort: Array of size " << n << " sorted in " << setprecision(2) << (double)duration/1000  << " seconds.\n";
-
-    // Counting Sort
-    t1 = hr_clock::now();
-    CountingSort(arr_count_sort, arr_count_sort.size()); // NOLINT(cppcoreguidelines-narrowing-conversions)
-    t2 = hr_clock::now();
-
-    duration = duration_cast<milliseconds>(t2 - t1).count();
-    cout << "Counting sort: Array of size " << n << " sorted in " << setprecision(2) << (double)duration/1000  << " seconds.\n";
-
-    // std::sort
-    t1 = hr_clock::now();
-    sort(arr_std_sort.begin(), arr_std_sort.end());
-    t2 = hr_clock::now();
-
-    duration = duration_cast<milliseconds>(t2 - t1).count();
-    cout << "Standard C++ Sort(std::sort) : Array of size " << n << " sorted in " << setprecision(2) << (double)duration/1000  << " seconds.\n";
-*/
     return 0;
 }
