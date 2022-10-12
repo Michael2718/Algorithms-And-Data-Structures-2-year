@@ -29,6 +29,7 @@ double** create_matrix_cleaned(int n, double phi, double mu) {
     for(int i = 0; i < n; i++) {
         matrix[i] = new double [n];
         first_part = (raised_two * 2) / pow(i - 2.5, pow(i, 2));
+        raised_two *= 2;
         third_part = sin(phi/(pow(mu*mu, i)));
         for (int j = 0; j < n; j++) {
             second_part = 2 - (j-5)*(j-5); // (2 - pow(j -5, 2)) | (-j*j + 10*j - 23) | 2 - (j-5)*(j-5)
