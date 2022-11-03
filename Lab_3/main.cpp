@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdexcept>
 
-using std::cout, std::cin, std::invalid_argument, std::out_of_range;
+using std::cout, std::cin, std::cerr, std::invalid_argument, std::out_of_range, std::exception;
 
 template <typename T, size_t N>
 class Stack {
@@ -47,15 +47,92 @@ T Stack<T, N>::get_top() {
     return items[top-items];
 }
 
-int main() {
-    Stack<int, 3> stack;
-    cout << "Stack is " << (stack.isEmpty() ? "" : "not ") << "empty\n";
-    cout << "Adding element\n";
-    stack.push(-1);
-    cout << "Stack is " << (stack.isEmpty() ? "" : "not ") << "empty\n";
-    cout << "Top of stack: " << stack.get_top() << "\n";
-    cout << "Deleting top element\n";
+void test_stack() {
+    const int n = 3;
+    Stack<int, n> stack;
+
+
+    if (stack.isEmpty()) {
+        cout << "Test passed: stack created.\n";
+    } else {
+        cerr << "Test failed: stack wasn't created.\n";
+    }
+
+    // push()
+    int items[] = {-3, 0, 2};
+    try {
+        stack.push(items[0]);
+        if (!stack.isEmpty() && stack.get_top() == items[0]) {
+            cout << "Test passed: push().\n";
+        }
+        else {
+            cerr << "Test failed: item was pushed incorrectly.\n";
+        }
+    }
+    catch (exception& ex) {
+        cerr << "Error during push() test.\n";
+        cerr << ex.what();
+    }
+
+    stack.push(items[1]);
+    stack.push(items[2]);
+    try {
+        stack.push(1);
+        cerr << "Test failed: item was pushed to the full stack.\n";
+    } catch (exception& ex) {
+        cout << "Test passed: pushing element to the full stack. (what(): "
+             << ex.what() << ")\n";
+    }
+
+    // pop()
+    try {
+        stack.pop();
+        if (stack.get_top() == items[1]) {
+            cout << "Test passed: pop().\n";
+        }
+        else {
+            cerr << "Test failed: item was popped incorrectly.\n";
+        }
+    } catch (exception& ex) {
+        cerr << "Error during pop() test.\n";
+        cerr << ex.what();
+    }
+
     stack.pop();
-    cout << "Stack is " << (stack.isEmpty() ? "" : "not ") << "empty\n";
+    stack.pop();
+    try {
+        stack.pop();
+        cerr << "Test failed: item was popped from empty stack.\n";
+    } catch (exception& ex) {
+        cout << "Test passed: popping element from the empty stack. (what(): "
+             << ex.what() << ")\n";
+    }
+
+    // get_top()
+    try {
+        stack.push(items[0]);
+        stack.get_top();
+        if (stack.get_top() == items[0]) {
+            cout << "Test passed: get_top().\n";
+        }
+        else {
+            cerr << "Test failed: top item gotten incorrectly.\n";
+        }
+    } catch (exception& ex) {
+        cerr << "Error during get_top() test.\n";
+        cerr << ex.what();
+    }
+    stack.pop();
+    try {
+        stack.get_top();
+        cerr << "Test failed: got top element from empty stack.\n";
+    } catch (exception& ex) {
+        cout << "Test passed: getting top element from the empty stack. (what(): "
+             << ex.what() << ")\n";
+    }
+}
+
+int main() {
+    test_stack();
     return 0;
 }
