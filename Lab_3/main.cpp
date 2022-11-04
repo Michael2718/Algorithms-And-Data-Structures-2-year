@@ -12,18 +12,18 @@ public:
     Stack();
     ~Stack() = default;
 
-    bool isEmpty();
+    bool isEmpty() const;
 
     void push(T x);
     void pop();
-    T get_top();
+    T get_top() const;
 };
 
 template<typename T, size_t N>
 Stack<T, N>::Stack() : top(items-1) {}
 
 template<typename T, size_t N>
-bool Stack<T, N>::isEmpty() {
+bool Stack<T, N>::isEmpty() const {
     return (top == items-1);
 }
 
@@ -42,7 +42,7 @@ void Stack<T, N>::pop() {
 }
 
 template<typename T, size_t N>
-T Stack<T, N>::get_top() {
+T Stack<T, N>::get_top() const {
     if (top == items-1) throw out_of_range("Can't get top of stack, stack is empty");
     return items[top-items];
 }
