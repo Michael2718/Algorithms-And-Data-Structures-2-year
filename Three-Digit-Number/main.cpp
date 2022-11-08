@@ -8,6 +8,7 @@ using std::cout, std::cin, std::setprecision, std::chrono::duration_cast, std::c
 
 using hr_clock = std::chrono::high_resolution_clock;
 
+
 void Build_BruteForce(int m) {
     cout << "Found numbers, using bruteforce(m=" << m << "):\n";
     if(m > 0 && m <= 27) {
